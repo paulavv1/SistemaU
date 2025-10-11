@@ -54,4 +54,120 @@ cd my-app
 ## Instalar dependencias
 -npm install
 
+Instalar dependencias:
 
+npm install
+
+
+Configurar la base de datos en .env:
+
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/NOMBRE_DB?schema=public"
+PORT=3000
+Ejecutar migraciones de Prisma:
+
+npx prisma migrate dev --name init
+
+
+Generar cliente Prisma:
+
+npx prisma generate
+Ejecutar el proyecto
+# Modo desarrollo
+npm run start:dev
+
+# Modo producción
+npm run start:prod
+
+Ejecutar el proyecto
+# Modo desarrollo
+npm run start:dev
+
+# Modo producción
+npm run start:prod
+La API estará disponible en http://localhost:3000.
+Endpoints Principales
+
+Todos los endpoints soportan paginación mediante query params: ?page=1&limit=10.
+
+Carreras
+
+GET /carreras → Lista paginada
+
+GET /carreras/:id → Obtener por ID
+
+POST /carreras → Crear nueva carrera
+
+Especialidades
+
+GET /especialidades
+
+GET /especialidades/:id
+
+POST /especialidades
+
+Docentes
+
+GET /docentes
+
+GET /docentes/:id
+
+POST /docentes
+
+Ciclos
+
+GET /ciclos
+
+GET /ciclos/:id
+
+POST /ciclos
+
+Materias
+
+GET /materias
+
+GET /materias/:id
+
+POST /materias
+
+Estudiantes
+
+GET /estudiantes
+
+GET /estudiantes/:id
+
+POST /estudiantes
+
+Inscripciones
+
+GET /inscripciones
+
+GET /inscripciones/:id
+
+POST /inscripciones
+Estructura del Proyecto
+src/
+├─ app.module.ts
+├─ main.ts
+├─ prisma/
+│  ├─ prisma.module.ts
+│  └─ prisma.service.ts
+├─ carreras/
+├─ especialidades/
+├─ docentes/
+├─ ciclos/
+├─ materias/
+├─ estudiantes/
+└─ inscripciones/
+Buenas Prácticas Implementadas
+
+Validación de DTOs con class-validator
+
+Manejo de errores con NotFoundException
+
+Respuesta estandarizada en POST
+
+Paginación en endpoints GET
+
+Estructura modular por recurso
+
+Uso de PrismaService inyectable para acceder a la base de datos
