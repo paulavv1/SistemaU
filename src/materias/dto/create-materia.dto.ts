@@ -1,23 +1,23 @@
-import { IsNotEmpty, IsInt, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateMateriaDto {
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   nombre: string;
 
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   creditos: number;
 
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   carreraId: number;
 
-  @IsOptional()
   @IsInt()
+  @IsOptional()
   docenteId?: number;
 
-  @IsOptional()
   @IsInt()
+  @IsOptional()
   cicloId?: number;
 }
