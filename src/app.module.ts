@@ -17,9 +17,14 @@ import { InscripcionesController } from './inscripciones/inscripciones.controlle
 import { InscripcionesService } from './inscripciones/inscripciones.service';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from './prisma/prisma.service';
+import { CarrerasModule } from './carreras/carreras.module';
+import { CiclosModule } from './ciclos/ciclos.module';
+import { DocentesModule } from './docentes/docentes.module';
+import { EspecialidadesModule } from './especialidades/especialidades.module';
+import { EstudiantesModule } from './estudiantes/estudiantes.module';
 
 @Module({
-  imports: [],
+  imports: [CarrerasModule, CiclosModule, DocentesModule, EspecialidadesModule, EstudiantesModule],
   controllers: [AppController, CarrerasController, EspecialidadesController, DocentesController, CiclosController, MateriasController, EstudiantesController, InscripcionesController],
   providers: [AppService, CarrerasService, EspecialidadesService, DocentesService, CiclosService, MateriasService, EstudiantesService, InscripcionesService, PrismaService, PrismaClient],
 })

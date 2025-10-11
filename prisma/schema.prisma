@@ -22,21 +22,22 @@ model Especialidad {
 }
 
 model Docente {
-  id              Int             @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   nombre          String
-  email           String          @unique
+  email           String       @unique
   especialidadId  Int
-  especialidad    Especialidad    @relation(fields: [especialidadId], references: [id])
+  especialidad    Especialidad @relation(fields: [especialidadId], references: [id])
   materias        Materia[]
-  fechaCreacion   DateTime        @default(now())
+  fechaCreacion   DateTime     @default(now())
 }
 
 model Ciclo {
-  id          Int          @id @default(autoincrement())
-  nombre      String
-  descripcion String?
-  estudiantes Estudiante[]
-  materias    Materia[]
+  id           Int           @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
+  estudiantes  Estudiante[]
+  materias     Materia[]
+  inscripciones Inscripcion[]
 }
 
 model Materia {
@@ -54,25 +55,27 @@ model Materia {
 }
 
 model Estudiante {
-  id            Int           @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   nombre        String
-  email         String        @unique
+  email         String       @unique
   carreraId     Int
   cicloId       Int?
-  carrera       Carrera       @relation(fields: [carreraId], references: [id])
-  ciclo         Ciclo?        @relation(fields: [cicloId], references: [id])
+  carrera       Carrera      @relation(fields: [carreraId], references: [id])
+  ciclo         Ciclo?       @relation(fields: [cicloId], references: [id])
   inscripciones Inscripcion[]
-  fechaCreacion DateTime      @default(now())
+  fechaCreacion DateTime     @default(now())
 }
 
 model Inscripcion {
   id            Int        @id @default(autoincrement())
   estudianteId  Int
   materiaId     Int
+  cicloId       Int?       // <-- agregado
   fechaRegistro DateTime   @default(now())
 
   estudiante Estudiante @relation(fields: [estudianteId], references: [id])
   materia    Materia    @relation(fields: [materiaId], references: [id])
+  ciclo      Ciclo?     @relation(fields: [cicloId], references: [id]) // <-- agregado
 
   @@unique([estudianteId, materiaId])
 }
