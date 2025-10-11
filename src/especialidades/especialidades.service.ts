@@ -7,12 +7,12 @@ import { UpdateEspecialidadDto } from './dto/update-especialidad.dto';
 export class EspecialidadesService {
   constructor(private prisma: PrismaService) {}
 
-  // Crear nueva especialidad
+  // Crear especialidad
   create(data: CreateEspecialidadDto) {
     return this.prisma.especialidad.create({ data });
   }
 
-  // Listado con paginación
+  // Listar todas las especialidades con paginación
   findAll(page = 1, limit = 10) {
     return this.prisma.especialidad.findMany({
       skip: (page - 1) * limit,
@@ -20,25 +20,27 @@ export class EspecialidadesService {
     });
   }
 
-  // Buscar por ID
+  // Buscar una especialidad por ID
   async findOne(id: number) {
     const especialidad = await this.prisma.especialidad.findUnique({ where: { id } });
     if (!especialidad) throw new NotFoundException('Especialidad no encontrada');
     return especialidad;
   }
 
-  // Actualizar por ID
+  // Actualizar una especialidad
   async update(id: number, data: UpdateEspecialidadDto) {
-    await this.findOne(id); // lanza 404 si no existe
+    const especialidad = await this.prisma.especialidad.findUnique({ where: { id } });
+    if (!especialidad) throw new NotFoundException('Especialidad no encontrada');
     return this.prisma.especialidad.update({
       where: { id },
       data,
     });
   }
 
-  // Eliminar por ID (opcional, recomendado)
+  // Eliminar una especialidad
   async remove(id: number) {
-    await this.findOne(id); // lanza 404 si no existe
+    const especialidad = await this.prisma.especialidad.findUnique({ where: { id } });
+    if (!especialidad) throw new NotFoundException('Especialidad no encontrada');
     return this.prisma.especialidad.delete({ where: { id } });
   }
 }
