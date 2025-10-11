@@ -50,16 +50,12 @@ API REST modular desarrollada con **NestJS** y **Prisma**, que gestiona un siste
 ```bash
 git clone <tu-repositorio>
 cd my-app
-
+---
 ## Instalar dependencias
 -npm install
 
-Instalar dependencias:
-
-npm install
-
-
-Configurar la base de datos en .env:
+---
+## Configurar la base de datos en .env:
 
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/NOMBRE_DB?schema=public"
 PORT=3000
