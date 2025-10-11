@@ -51,3 +51,7 @@ API REST modular desarrollada con **NestJS** y **Prisma**, que gestiona un siste
 git clone <tu-repositorio>
 cd my-app
 
+## Instalar dependencias
+-npm install
+
+
