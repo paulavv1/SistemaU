@@ -1,12 +1,13 @@
-import { IsString, IsOptional, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateCicloDto {
   @IsString()
-  @MaxLength(100)
+  @IsNotEmpty({ message: 'El nombre del ciclo es obligatorio.' })
+  @MaxLength(100, { message: 'El nombre no puede superar los 100 caracteres.' })
   nombre: string;
 
-  @IsOptional()
   @IsString()
-  @MaxLength(255)
+  @IsOptional()
+  @MaxLength(255, { message: 'La descripción no puede superar los 255 caracteres.' })
   descripcion?: string;
 }
