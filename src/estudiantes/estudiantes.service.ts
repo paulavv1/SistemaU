@@ -7,34 +7,37 @@ import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 export class EstudiantesService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateEstudianteDto) {
+  create(data: CreateEstudianteDto) {
     return this.prisma.estudiante.create({ data });
   }
 
-  async findAll(page = 1, limit = 10) {
+  findAll(page = 1, limit = 10) {
     return this.prisma.estudiante.findMany({
       skip: (page - 1) * limit,
       take: limit,
-      include: { carrera: true, ciclo: true }, // muestra relaciones
+      orderBy: { id: 'asc' },
     });
   }
 
   async findOne(id: number) {
-    const estudiante = await this.prisma.estudiante.findUnique({
-      where: { id },
-      include: { carrera: true, ciclo: true },
-    });
+    const estudiante = await this.prisma.estudiante.findUnique({ where: { id } });
     if (!estudiante) throw new NotFoundException('Estudiante no encontrado');
     return estudiante;
   }
 
   async update(id: number, data: UpdateEstudianteDto) {
-    await this.findOne(id); // valida existencia
+    const estudiante = await this.prisma.estudiante.findUnique({ where: { id } });
+    if (!estudiante)
+      throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
+
     return this.prisma.estudiante.update({ where: { id }, data });
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const estudiante = await this.prisma.estudiante.findUnique({ where: { id } });
+    if (!estudiante)
+      throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
+
     return this.prisma.estudiante.delete({ where: { id } });
   }
 }

@@ -1,13 +1,20 @@
-import { IsString, IsEmail, IsInt, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsEmail, MaxLength, IsInt } from 'class-validator';
 
 export class CreateDocenteDto {
   @IsString()
+  @IsNotEmpty({ message: 'El nombre del docente es obligatorio.' })
   @MaxLength(100)
   nombre: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'Debe ser un correo válido.' })
+  @IsNotEmpty({ message: 'El email es obligatorio.' })
   email: string;
 
-  @IsInt()
+  @IsInt({ message: 'El ID de la especialidad debe ser un número.' })
   especialidadId: number;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(255)
+  fechaCreacion?: string; // Opcional, generalmente Prisma lo llena automáticamente
 }
