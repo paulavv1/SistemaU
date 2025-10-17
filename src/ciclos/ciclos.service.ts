@@ -7,14 +7,15 @@ import { UpdateCicloDto } from './dto/update-ciclo.dto';
 export class CiclosService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateCicloDto) {
+  create(data: CreateCicloDto) {
     return this.prisma.ciclo.create({ data });
   }
 
-  async findAll(page = 1, limit = 10) {
+  findAll(page = 1, limit = 10) {
     return this.prisma.ciclo.findMany({
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: { id: 'asc' },
     });
   }
 
@@ -26,13 +27,15 @@ export class CiclosService {
 
   async update(id: number, data: UpdateCicloDto) {
     const ciclo = await this.prisma.ciclo.findUnique({ where: { id } });
-    if (!ciclo) throw new NotFoundException('Ciclo no encontrado');
+    if (!ciclo) throw new NotFoundException(`Ciclo con ID ${id} no encontrado`);
+
     return this.prisma.ciclo.update({ where: { id }, data });
   }
 
   async remove(id: number) {
     const ciclo = await this.prisma.ciclo.findUnique({ where: { id } });
-    if (!ciclo) throw new NotFoundException('Ciclo no encontrado');
+    if (!ciclo) throw new NotFoundException(`Ciclo con ID ${id} no encontrado`);
+
     return this.prisma.ciclo.delete({ where: { id } });
   }
 }

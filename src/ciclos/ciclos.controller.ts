@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CiclosService } from './ciclos.service';
 import { CreateCicloDto } from './dto/create-ciclo.dto';
 import { UpdateCicloDto } from './dto/update-ciclo.dto';
@@ -22,8 +32,11 @@ export class CiclosController {
     return this.ciclosService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateCicloDto: UpdateCicloDto) {
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateCicloDto: UpdateCicloDto,
+  ) {
     return this.ciclosService.update(id, updateCicloDto);
   }
 
