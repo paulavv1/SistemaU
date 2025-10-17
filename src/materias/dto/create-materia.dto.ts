@@ -1,16 +1,13 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateMateriaDto {
   @IsString()
-  @IsNotEmpty()
   nombre: string;
 
   @IsInt()
-  @IsNotEmpty()
   creditos: number;
 
   @IsInt()
-  @IsNotEmpty()
   carreraId: number;
 
   @IsInt()

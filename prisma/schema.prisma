@@ -32,11 +32,11 @@ model Docente {
 }
 
 model Ciclo {
-  id           Int           @id @default(autoincrement())
-  nombre       String
-  descripcion  String?
-  estudiantes  Estudiante[]
-  materias     Materia[]
+  id            Int           @id @default(autoincrement())
+  nombre        String
+  descripcion   String?
+  estudiantes   Estudiante[]
+  materias      Materia[]
   inscripciones Inscripcion[]
 }
 
@@ -70,12 +70,12 @@ model Inscripcion {
   id            Int        @id @default(autoincrement())
   estudianteId  Int
   materiaId     Int
-  cicloId       Int?       // <-- agregado
+  cicloId       Int?       // Relación opcional
   fechaRegistro DateTime   @default(now())
 
   estudiante Estudiante @relation(fields: [estudianteId], references: [id])
   materia    Materia    @relation(fields: [materiaId], references: [id])
-  ciclo      Ciclo?     @relation(fields: [cicloId], references: [id]) // <-- agregado
+  ciclo      Ciclo?     @relation(fields: [cicloId], references: [id])
 
   @@unique([estudianteId, materiaId])
 }

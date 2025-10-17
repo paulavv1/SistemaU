@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Patch,
-  Delete,
-  Param,
-  Body,
-  Query,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe } from '@nestjs/common';
 import { EstudiantesService } from './estudiantes.service';
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
@@ -23,8 +13,8 @@ export class EstudiantesController {
   }
 
   @Get()
-  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
-    return this.estudiantesService.findAll(Number(page), Number(limit));
+  findAll() {
+    return this.estudiantesService.findAll();
   }
 
   @Get(':id')

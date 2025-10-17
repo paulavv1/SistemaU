@@ -5,51 +5,45 @@ import { UpdateInscripcionDto } from './dto/update-inscripcion.dto';
 
 @Injectable()
 export class InscripcionesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  // Crear inscripcion
   async create(data: CreateInscripcionDto) {
-    // Verifica que estudiante y materia existan
-    const estudiante = await this.prisma.estudiante.findUnique({ where: { id: data.estudianteId } });
-    if (!estudiante) throw new NotFoundException('Estudiante no encontrado');
-
-    const materia = await this.prisma.materia.findUnique({ where: { id: data.materiaId } });
-    if (!materia) throw new NotFoundException('Materia no encontrada');
-
-    return this.prisma.inscripcion.create({ data });
+    try {
+      return await this.prisma.inscripcion.create({ data });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  // Listar inscripciones con paginación
-  async findAll(page = 1, limit = 10) {
+  async findAll() {
     return this.prisma.inscripcion.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
       include: {
         estudiante: true,
         materia: true,
+        ciclo: true,
       },
     });
   }
 
-  // Buscar por ID
   async findOne(id: number) {
     const inscripcion = await this.prisma.inscripcion.findUnique({
       where: { id },
-      include: { estudiante: true, materia: true },
+      include: { estudiante: true, materia: true, ciclo: true },
     });
-    if (!inscripcion) throw new NotFoundException('Inscripción no encontrada');
+    if (!inscripcion) throw new NotFoundException(`Inscripcion con ID ${id} no encontrada`);
     return inscripcion;
   }
 
-  // Actualizar inscripcion
   async update(id: number, data: UpdateInscripcionDto) {
-    await this.findOne(id);
-    return this.prisma.inscripcion.update({ where: { id }, data });
+    await this.findOne(id); // valida que exista
+    return this.prisma.inscripcion.update({
+      where: { id },
+      data,
+    });
   }
 
-  // Eliminar inscripcion
   async remove(id: number) {
-    await this.findOne(id);
+    await this.findOne(id); // valida que exista
     return this.prisma.inscripcion.delete({ where: { id } });
   }
 }

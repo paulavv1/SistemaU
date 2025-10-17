@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  try {
+    const app = await NestFactory.create(AppModule);
 
-  // Habilita CORS
-  app.enableCors();
+    app.enableCors();
 
-  // Valida automáticamente DTOs en todos los endpoints
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+    app.useGlobalPipes(
+      new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    );
 
-  await app.listen(process.env.PORT ?? 3000);
+    await app.listen(process.env.PORT ?? 3000);
+    logger.log(`Application is running on: ${await app.getUrl()}`);
+  } catch (error) {
+    logger.error('Error starting application', error, 'Bootstrap');
+  }
 }
 bootstrap();

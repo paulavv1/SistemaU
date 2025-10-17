@@ -27,16 +27,14 @@ export class EstudiantesService {
 
   async update(id: number, data: UpdateEstudianteDto) {
     const estudiante = await this.prisma.estudiante.findUnique({ where: { id } });
-    if (!estudiante)
-      throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
+    if (!estudiante) throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
 
     return this.prisma.estudiante.update({ where: { id }, data });
   }
 
   async remove(id: number) {
     const estudiante = await this.prisma.estudiante.findUnique({ where: { id } });
-    if (!estudiante)
-      throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
+    if (!estudiante) throw new NotFoundException(`Estudiante con ID ${id} no encontrado`);
 
     return this.prisma.estudiante.delete({ where: { id } });
   }

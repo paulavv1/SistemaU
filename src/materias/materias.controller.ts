@@ -1,34 +1,34 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { MateriasService } from './materias.service';
 import { CreateMateriaDto } from './dto/create-materia.dto';
 import { UpdateMateriaDto } from './dto/update-materia.dto';
 
 @Controller('materias')
 export class MateriasController {
-  constructor(private readonly service: MateriasService) {}
+  constructor(private readonly materiasService: MateriasService) {}
 
   @Post()
-  create(@Body() dto: CreateMateriaDto) {
-    return this.service.create(dto);
+  create(@Body() createMateriaDto: CreateMateriaDto) {
+    return this.materiasService.create(createMateriaDto);
   }
 
   @Get()
-  findAll(@Query('page') page = '1', @Query('limit') limit = '10') {
-    return this.service.findAll(Number(page), Number(limit));
+  findAll() {
+    return this.materiasService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.service.findOne(id);
+    return this.materiasService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateMateriaDto) {
-    return this.service.update(id, dto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateMateriaDto: UpdateMateriaDto) {
+    return this.materiasService.update(id, updateMateriaDto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.service.remove(id);
+    return this.materiasService.remove(id);
   }
 }
